@@ -210,7 +210,8 @@ twCoefLogitnormCi <- function(
 	### Calculates mu and sigma of the logitnormal distribution from lower and upper quantile, i.e. confidence interval.
 	lower	##<< value at the lower quantile, i.e. practical minimum
 	,upper	##<< value at the upper quantile, i.e. practical maximum
-	,sigmaFac=qnorm(0.99) 	##<< sigmaFac=2 is 95% sigmaFac=2.6 is 99% interval
+	,perc=0.975	##<< numeric vector: the probability for which the quantile was specified
+	,sigmaFac=qnorm(perc) 	##<< sigmaFac=2 is 95% sigmaFac=2.6 is 99% interval
 	,isTransScale = FALSE ##<< if true lower and upper are already on logit scale
 ){	
 	##seealso<< \code{\link{logitnorm}}
