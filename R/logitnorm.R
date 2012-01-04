@@ -82,6 +82,7 @@ dlogitnorm <- function(
 	## \item{from mode and upper quantile: \code{\link{twCoefLogitnormMLE}} }
 	## \item{from median and upper quantile: \code{\link{twCoefLogitnorm}} }
 	## \item{from expected value, i.e. mean and upper quantile: \code{\link{twCoefLogitnormE}} }
+	## \item{from a confidence interval which is symmetric at normal scale: \code{\link{twCoefLogitnormCi}} }
 	## \item{from prescribed quantiles: \code{\link{twCoefLogitnormN}} }
 	## }
 	## }}
@@ -205,8 +206,33 @@ attr(twCoefLogitnorm,"ex") <- function(){
 	(theta <- twCoefLogitnorm(seq(0.4,0.8,by=0.1),0.9))
 }
 
-
-
+twCoefLogitnormCi <- function( 
+	### Calculates mu and sigma of the logitnormal distribution from lower and upper quantile, i.e. confidence interval.
+	lower	##<< value at the lower quantile, i.e. practical minimum
+	,upper	##<< value at the upper quantile, i.e. practical maximum
+	,sigmaFac=qnorm(0.99) 	##<< sigmaFac=2 is 95% sigmaFac=2.6 is 99% interval
+	,isTransScale = FALSE ##<< if true lower and upper are already on logit scale
+){	
+	##seealso<< \code{\link{logitnorm}}
+	if( !isTRUE(isTransScale) ){
+		lower <- logit(lower)
+		upper <- logit(upper)
+	}
+	halfWidth <- (upper-lower)/2
+	sigma <- halfWidth/sigmaFac
+	cbind( mu=upper-halfWidth, sigma=sigma )
+	### named numeric vector: mu and sigma parameter of the logitnormal distribution.
+}
+attr(twCoefLogitnormCi,"ex") <- function(){
+	mu=2
+	sd=c(1,0.8)
+	p=0.99
+	lower <- l <- qlogitnorm(1-p, mu, sd )		# p-confidence interval
+	upper <- u <- qlogitnorm(p, mu, sd )		# p-confidence interval
+	cf <- twCoefLogitnormCi(lower,upper)	
+	all.equal( cf[,"mu"] , c(mu,mu) )
+	all.equal( cf[,"sigma"] , sd )
+}
 
 .ofLogitnormMLE <- function(
 	### Objective function used by \code{\link{coefLogitnormMLE}}. 

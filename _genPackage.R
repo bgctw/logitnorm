@@ -10,9 +10,28 @@
 }
 
 .tmp.f <- function(){
+	pkg <- "logitnorm"
+	
 	library(inlinedocs)
 	unlink( file.path("man","*.Rd") )	
 	package.skeleton.dx(".")
+	
+	# generate the HTML  files
+	prevWd <- setwd("..")
+	system(	paste("R CMD INSTALL --html ",pkg, sep="") )
+	setwd(prevWd)
+	
+	# show in Browser
+	htmlRoot <- file.path( system.file(package = pkg), "html" )
+	html_viewer <- function(path) {
+		browser <- getOption("browser")
+		if(is.null(browser) && .Platform$OS.type == "windows")
+			shell.exec(chartr("/", "\\", path))
+		else browseURL(paste("file://", URLencode(path), sep=""))
+	}
+	html_viewer(file.path(htmlRoot,"00Index.html"))
+	
+	
 }
 
 #R CMD check --no-vignettes --no-latex --no-install logitnorm
