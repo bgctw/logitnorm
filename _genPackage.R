@@ -3,9 +3,9 @@
 # install.packages("inlinedocs")
 
 .tmp.f <- function(){
-	source("R/logitnorm.R")
-
 	library(twMisc)
+	source("R/logitnorm.R")
+	
 	twUtestF()
 }
 
@@ -31,7 +31,7 @@
 	}
 	html_viewer(file.path(htmlRoot,"00Index.html"))
 	
-	
+	updateVersionAndDate()
 }
 
 #R CMD check --no-vignettes --no-latex --no-install logitnorm

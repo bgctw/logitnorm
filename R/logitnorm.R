@@ -312,11 +312,11 @@ attr(twCoefLogitnormMLE,"ex") <- function(){
 	,mean				##<< the expected value of the density distribution
 	,quant				##<< q are the quantiles for perc
 	,perc=c(0.975) 
-	,nGrid=39			##<< number of points to approximate density function integral
+	,...				##<< further argument to \code{\link{momentsLogitnorm}}.
 ){
 	tmp.predp = plogitnorm(quant, mu=theta[1], sigma=theta[2] )
 	tmp.diff = tmp.predp - perc
-	.exp <- momentsLogitnorm(theta[1],theta[2],nGrid=nGrid)["mean"]
+	.exp <- momentsLogitnorm(theta[1],theta[2],...)["mean"]
 	tmp.diff.e <- mean-.exp
 	sum(tmp.diff^2) + tmp.diff.e^2
 }
@@ -376,25 +376,20 @@ momentsLogitnorm <- function(
 	### First two moments of the logitnormal distribution by numerical integration
 	mu	##<< parameter mu 
 	,sigma		##<< parameter sigma
-	,nGrid=79	##<< number of grid points for numerical integration
+	,...		##<< further parameters to the integration function
 ){
-	xBounds <- qlogitnorm(c(1e-10,1-1e-10), mu=mu,sigma=sigma)
-	xGrid <- seq(xBounds[1],xBounds[2],length.out=nGrid+2)[-c(1,nGrid+2)]
-	#pGrid <- plogitnorm(xGrid, mu=theta[1],sigma=theta[2])
-	.midPoints <- xGrid[-nGrid]+(xGrid[-1] - xGrid[-nGrid])/2
-	.ranges <- c(0,.midPoints,1)
-	dx <- diff(.ranges)
-	#fx <- dlogitnorm(xGrid, mu=mu,sigma=sigma)
-	#plot( fx ~ xGrid, xlim=xBounds )
-	#abline( v=.ranges, col="red" )
-	fxdx <- dlogitnorm(xGrid, mu=mu,sigma=sigma)*dx
-	.exp <- sum( xGrid*fxdx)
-	.var <- sum( (xGrid-.exp)^2*fxdx )
+	fExp <- function(x)  plogis(x)*dnorm(x,mean=mu,sd=sigma)
+	.exp <- integrate(fExp,-Inf,Inf, ...)$value
+	fVar <- function(x)   (plogis(x) - .exp)^2 * dnorm(x,mean=mu,sd=sigma)
+	.var <- integrate(fVar,-Inf,Inf, ...)$value
 	c( mean=.exp, var=.var )
 	### named numeric vector with components \itemize{
 	### \item{ \code{mean}: expected value, i.e. first moment}
 	### \item{ \code{var}: variance, i.e. second moment }
 	### }
+}
+attr(momentsLogitnorm,"ex") <- function(){
+	(res <- momentsLogitnorm(4,1))
 }
 
 .ofModeLogitnorm <- function(
