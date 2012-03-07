@@ -20,3 +20,12 @@ test.1 <- function(){
 	checkEqualsNumeric( var(z), moments["var"], tolerance=6e-3)
 }
 
+test.momentsLogitnorm41 <- function(){
+	(res <- momentsLogitnorm(4,1))
+	checkEqualsNumeric( c(0.97189602, 0.00101663), res)
+}
+
+test.momentsLogitnorm501 <- function(){
+	(res <- momentsLogitnorm(5,0.1))
+	checkEqualsNumeric( c(9.932743e-01, 4.484069e-07), res, tolerance=1e-7)
+}

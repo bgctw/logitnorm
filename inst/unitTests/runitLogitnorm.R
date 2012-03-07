@@ -67,11 +67,6 @@ test.twCoefLogitnormMLE <- function(){
 	checkEquals(which.min(abs(x-0.7)), which.max(dx) )
 }
 
-test.momentsLogitnorm <- function(){
-	(res <- momentsLogitnorm(4,1))
-	checkEqualsNumeric( c(0.97189602, 0.00101663), res)
-}
-	
 
 test.twCoefLogitnormE <- function(){
 	theta <- twCoefLogitnormE(0.7,0.9)
