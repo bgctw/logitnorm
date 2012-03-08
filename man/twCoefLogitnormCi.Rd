@@ -5,12 +5,14 @@
 \usage{
 twCoefLogitnormCi(lower,
 upper,
-sigmaFac = qnorm(0.99),
+perc = 0.975,
+sigmaFac = qnorm(perc),
 isTransScale = FALSE)
 }
 \arguments{
   \item{lower}{value at the lower quantile, i.e. practical minimum}
   \item{upper}{value at the upper quantile, i.e. practical maximum}
+  \item{perc}{numeric vector: the probability for which the quantile was specified}
   \item{sigmaFac}{sigmaFac=2 is 95\% sigmaFac=2.6 is 99\% interval}
   \item{isTransScale}{if true lower and upper are already on logit scale}
 }

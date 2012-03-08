@@ -5,12 +5,14 @@
 \usage{
 momentsLogitnorm(mu,
 sigma,
-nGrid = 79)
+abs.tol = 0,
+...)
 }
 \arguments{
   \item{mu}{parameter mu}
   \item{sigma}{parameter sigma}
-  \item{nGrid}{number of grid points for numerical integration}
+  \item{abs.tol}{chaning default to \code{\link{integrate}}}
+  \item{\dots}{further parameters to the \code{\link{integrate}} function}
 }
 
 \value{named numeric vector with components \itemize{
@@ -23,4 +25,7 @@ nGrid = 79)
 
 
 
-
+\examples{
+(res <- momentsLogitnorm(4,1))
+(res <- momentsLogitnorm(5,0.1))
+}
