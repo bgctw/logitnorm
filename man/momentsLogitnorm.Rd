@@ -2,12 +2,7 @@
 \alias{momentsLogitnorm}
 \title{momentsLogitnorm}
 \description{First two moments of the logitnormal distribution by numerical integration}
-\usage{
-momentsLogitnorm(mu,
-sigma,
-abs.tol = 0,
-...)
-}
+\usage{momentsLogitnorm(mu, sigma, abs.tol = 0, ...)}
 \arguments{
   \item{mu}{parameter mu}
   \item{sigma}{parameter sigma}

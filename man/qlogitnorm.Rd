@@ -2,12 +2,7 @@
 \alias{qlogitnorm}
 \title{qlogitnorm}
 \description{Quantiles of logitnormal distribution.	}
-\usage{
-qlogitnorm(p,
-mu = 0,
-sigma = 1,
-...)
-}
+\usage{qlogitnorm(p, mu = 0, sigma = 1, ...)}
 \arguments{
   \item{p}{
 }

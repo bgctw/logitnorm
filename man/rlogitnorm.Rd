@@ -2,11 +2,7 @@
 \alias{rlogitnorm}
 \title{rlogitnorm}
 \description{Random number generation for logitnormal distribution}
-\usage{
-rlogitnorm(mu = 0,
-sigma = 1,
-...)
-}
+\usage{rlogitnorm(mu = 0, sigma = 1, ...)}
 \arguments{
   \item{mu}{distribution parameters}
   \item{sigma}{

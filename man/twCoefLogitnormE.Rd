@@ -2,16 +2,8 @@
 \alias{twCoefLogitnormE}
 \title{twCoefLogitnormE}
 \description{Estimating coefficients of logitnormal distribution from expected value, i.e. mean, and upper quantile.	}
-\usage{
-twCoefLogitnormE(mean,
-quant,
-perc = c(0.975),
-method = "BFGS",
-theta0 = c(mu = 0,
-sigma = 1),
-returnDetails = FALSE,
-...)
-}
+\usage{twCoefLogitnormE(mean, quant, perc = c(0.975), method = "BFGS", 
+    theta0 = c(mu = 0, sigma = 1), returnDetails = FALSE, ...)}
 \arguments{
   \item{mean}{the expected value of the density function}
   \item{quant}{the quantile values}

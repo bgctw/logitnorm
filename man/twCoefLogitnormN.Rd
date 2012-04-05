@@ -2,16 +2,8 @@
 \alias{twCoefLogitnormN}
 \title{twCoefLogitnormN}
 \description{Estimating coefficients of logitnormal distribution from a vector of quantiles and perentiles (non-vectorized).	}
-\usage{
-twCoefLogitnormN(quant,
-perc = c(0.5,
-0.975),
-method = "BFGS",
-theta0 = c(mu = 0,
-sigma = 1),
-returnDetails = FALSE,
-...)
-}
+\usage{twCoefLogitnormN(quant, perc = c(0.5, 0.975), method = "BFGS", 
+    theta0 = c(mu = 0, sigma = 1), returnDetails = FALSE, ...)}
 \arguments{
   \item{quant}{the quantile values}
   \item{perc}{the probabilites for which the quantiles were specified}

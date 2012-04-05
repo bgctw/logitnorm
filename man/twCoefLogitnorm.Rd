@@ -2,16 +2,8 @@
 \alias{twCoefLogitnorm}
 \title{twCoefLogitnorm}
 \description{Estimating coefficients of logitnormal distribution from median and upper quantile	}
-\usage{
-twCoefLogitnorm(median,
-quant,
-perc = 0.975,
-method = "BFGS",
-theta0 = c(mu = 0,
-sigma = 1),
-returnDetails = FALSE,
-...)
-}
+\usage{twCoefLogitnorm(median, quant, perc = 0.975, method = "BFGS", 
+    theta0 = c(mu = 0, sigma = 1), returnDetails = FALSE, ...)}
 \arguments{
   \item{median}{numeric vector: the median of the density function}
   \item{quant}{numeric vector: the upper quantile value}

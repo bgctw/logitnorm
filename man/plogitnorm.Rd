@@ -2,12 +2,7 @@
 \alias{plogitnorm}
 \title{plogitnorm}
 \description{Distribution function for logitnormal distribution	}
-\usage{
-plogitnorm(q,
-mu = 0,
-sigma = 1,
-...)
-}
+\usage{plogitnorm(q, mu = 0, sigma = 1, ...)}
 \arguments{
   \item{q}{
 }

@@ -2,10 +2,7 @@
 \alias{invlogit}
 \title{invlogit}
 \description{Transforming (-Inf,Inf) to original scale (0,1)}
-\usage{
-invlogit(q,
-...)
-}
+\usage{invlogit(q, ...)}
 \arguments{
   \item{q}{
 }

@@ -2,10 +2,7 @@
 \alias{twSigmaLogitnorm}
 \title{twSigmaLogitnorm}
 \description{Estimating coefficients of logitnormal distribution from mode and given mu	}
-\usage{
-twSigmaLogitnorm(mle,
-mu = 0)
-}
+\usage{twSigmaLogitnorm(mle, mu = 0)}
 \arguments{
   \item{mle}{numeric vector: the mode of the density function}
   \item{mu}{for mu=0 the distribution will be the flattest case (maybe bimodal)}

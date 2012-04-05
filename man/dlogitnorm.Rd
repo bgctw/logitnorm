@@ -3,12 +3,7 @@
 \alias{logitnorm}
 \title{dlogitnorm}
 \description{Density function of logitnormal distribution	}
-\usage{
-dlogitnorm(q,
-mu = 0,
-sigma = 1,
-...)
-}
+\usage{dlogitnorm(q, mu = 0, sigma = 1, ...)}
 \arguments{
   \item{q}{quantiles}
   \item{mu}{distribution parameters}

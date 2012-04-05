@@ -2,11 +2,7 @@
 \alias{twCoefLogitnormMLE}
 \title{twCoefLogitnormMLE}
 \description{Estimating coefficients of logitnormal distribution from mode and upper quantile	}
-\usage{
-twCoefLogitnormMLE(mle,
-quant,
-perc = 0.999)
-}
+\usage{twCoefLogitnormMLE(mle, quant, perc = 0.999)}
 \arguments{
   \item{mle}{numeric vector: the mode of the density function}
   \item{quant}{numeric vector: the upper quantile value}

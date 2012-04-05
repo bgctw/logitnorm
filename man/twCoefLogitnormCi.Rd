@@ -2,13 +2,8 @@
 \alias{twCoefLogitnormCi}
 \title{twCoefLogitnormCi}
 \description{Calculates mu and sigma of the logitnormal distribution from lower and upper quantile, i.e. confidence interval.}
-\usage{
-twCoefLogitnormCi(lower,
-upper,
-perc = 0.975,
-sigmaFac = qnorm(perc),
-isTransScale = FALSE)
-}
+\usage{twCoefLogitnormCi(lower, upper, perc = 0.975, sigmaFac = qnorm(perc), 
+    isTransScale = FALSE)}
 \arguments{
   \item{lower}{value at the lower quantile, i.e. practical minimum}
   \item{upper}{value at the upper quantile, i.e. practical maximum}
