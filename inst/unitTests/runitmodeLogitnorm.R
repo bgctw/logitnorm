@@ -17,9 +17,10 @@ test.rightMode <- function(){
 	abline(v=mle,col="gray")
 	
 	#check by monte carlo integration
-	z <- rlogitnorm(1e6, mu=theta0[1], sigma=theta0[2]);	var(z)
-	dz <- density(z)
-	checkEqualsNumeric( dz$x[which.max(dz$y)], mle, tolerance=5e-2)
+	#z <- rlogitnorm(1e6, mu=theta0[1], sigma=theta0[2]);	var(z)
+	#dz <- density(z)
+	#checkEqualsNumeric( dz$x[which.max(dz$y)], mle, tolerance=5e-2)
+	checkEqualsNumeric( 0.88, mle, tolerance=1e-2)
 }
 
 test.leftMode <- function(){
@@ -33,8 +34,10 @@ test.leftMode <- function(){
 	abline(v=mle,col="gray")
 	
 	#check by monte carlo integration
-	z <- rlogitnorm(1e6, mu=theta0[1], sigma=theta0[2]);	var(z)
-	dz <- density(z)
-	checkEqualsNumeric( dz$x[which.max(dz$y)], mle, tolerance=5e-2)
+	# deprecated: did not run on Windows
+	#z <- rlogitnorm(1e6, mu=theta0[1], sigma=theta0[2]);	var(z)
+	#dz <- density(z)
+	#checkEqualsNumeric( dz$x[which.max(dz$y)], mle, tolerance=5e-2)
+	checkEqualsNumeric( 0.12, mle, tolerance=1e-2)		# regression 0.12 calculated previously
 }
 
