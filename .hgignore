@@ -3,3 +3,5 @@ syntax: regexp
 ^\.project$
 syntax: regexp
 ^\.RData$
+syntax: regexp
+^\.hgignore$
