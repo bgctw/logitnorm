@@ -46,49 +46,52 @@ plogitnorm <- function(
 	pnorm(ql,mean=mu,sd=sigma,...)
 }
 
+
 dlogitnorm <- function(
-	### Density function of logitnormal distribution	
-	q		##<< quantiles
-	,mu = 0, sigma = 1	##<< distribution parameters
-	,...	##<< further arguments passed to \code{\link{dnorm}}: \code{mean}, and \code{sd} for mu and sigma respectively.  
+        ### Density function of logitnormal distribution	
+        q		##<< quantiles
+        ,mu = 0, sigma = 1	##<< distribution parameters
+        ,...	##<< further arguments passed to \code{\link{dnorm}}: \code{mean}, and \code{sd} for mu and sigma respectively.  
 ){
-	##alias<< logitnorm
-	
-	##details<< \describe{\item{Logitnorm distribution}{ 
-	## \itemize{
-	## \item{density function: dlogitnorm }
-	## \item{distribution function: \code{\link{plogitnorm}} }
-	## \item{quantile function: \code{\link{qlogitnorm}} }
-	## \item{random generation function: \code{\link{rlogitnorm}} }
-	## }
-	## }}
-	
-	##details<< \describe{\item{Transformation functions}{ 
-	## \itemize{
-	## \item{ (0,1) -> (-Inf,Inf): \code{\link{logit}} }
-	## \item{ (-Inf,Inf) -> (0,1): \code{\link{invlogit}} }
-	## }
-	## }}
-	
-	##details<< \describe{\item{Moments and mode}{ 
-	## \itemize{
-	## \item{ Expected value and variance: \code{\link{momentsLogitnorm}} }
-	## \item{ Mode: \code{\link{modeLogitnorm}} }
-	## }
-	## }}
-	
-	##details<< \describe{\item{Estimating parameters}{ 
-	## \itemize{
-	## \item{from mode and upper quantile: \code{\link{twCoefLogitnormMLE}} }
-	## \item{from median and upper quantile: \code{\link{twCoefLogitnorm}} }
-	## \item{from expected value, i.e. mean and upper quantile: \code{\link{twCoefLogitnormE}} }
-	## \item{from a confidence interval which is symmetric at normal scale: \code{\link{twCoefLogitnormCi}} }
-	## \item{from prescribed quantiles: \code{\link{twCoefLogitnormN}} }
-	## }
-	## }}
-	
-	ql <- qlogis(q)
-	dnorm(ql,mean=mu,sd=sigma,...) /q/(1-q)	# multiply by the Jacobian (derivative) of the back-Transformation (logit)
+    ##alias<< logitnorm
+    
+    ##details<< \describe{\item{Logitnorm distribution}{ 
+    ## \itemize{
+    ## \item{density function: dlogitnorm }
+    ## \item{distribution function: \code{\link{plogitnorm}} }
+    ## \item{quantile function: \code{\link{qlogitnorm}} }
+    ## \item{random generation function: \code{\link{rlogitnorm}} }
+    ## }
+    ## }}
+    
+    ##details<< \describe{\item{Transformation functions}{ 
+    ## \itemize{
+    ## \item{ (0,1) -> (-Inf,Inf): \code{\link{logit}} }
+    ## \item{ (-Inf,Inf) -> (0,1): \code{\link{invlogit}} }
+    ## }
+    ## }}
+    
+    ##details<< \describe{\item{Moments and mode}{ 
+    ## \itemize{
+    ## \item{ Expected value and variance: \code{\link{momentsLogitnorm}} }
+    ## \item{ Mode: \code{\link{modeLogitnorm}} }
+    ## }
+    ## }}
+    
+    ##details<< \describe{\item{Estimating parameters}{ 
+    ## \itemize{
+    ## \item{from mode and upper quantile: \code{\link{twCoefLogitnormMLE}} }
+    ## \item{from median and upper quantile: \code{\link{twCoefLogitnorm}} }
+    ## \item{from expected value, i.e. mean and upper quantile: \code{\link{twCoefLogitnormE}} }
+    ## \item{from a confidence interval which is symmetric at normal scale: \code{\link{twCoefLogitnormCi}} }
+    ## \item{from prescribed quantiles: \code{\link{twCoefLogitnormN}} }
+    ## }
+    ## }}
+    
+    ##detail<< log=TRUE does not work. Please use \code{log(dlogitnorm(...))}
+    
+    ql <- qlogis(q)
+    dnorm(ql,mean=mu,sd=sigma,...) /q/(1-q)	# multiply by the Jacobian (derivative) of the back-Transformation (logit)
 }
 
 qlogitnorm <- function(
@@ -284,6 +287,7 @@ twCoefLogitnormMLE <- function(
 		tmp <- sign(logitMle)*log(seq(1,exp(upper),length.out=40))
 		oftmp<-.ofLogitnormMLE(tmp, mle=(mleI), logitMle=logitMle, quant=(quantI<-quant[1+i0%%nc[2]]), perc=(percI<-perc[1+i0%%nc[3]]))
 		#plot(tmp,oftmp)
+        # now optimize starting from the near minimum
 		imin <- which.min(oftmp)
 		intv <- tmp[ c(max(1,imin-1), min(length(tmp),imin+1)) ]
 		if( diff(intv)==0 ) mu <- intv[1] else
@@ -309,6 +313,9 @@ attr(twCoefLogitnormMLE,"ex") <- function(){
 	
 	# vectorized
 	(theta <- twCoefLogitnormMLE(mle=seq(0.4,0.8,by=0.1),quant=0.9))
+    
+    # flat
+    (theta <- twCoefLogitnormMLE(0.7,0))
 }
 
 .ofLogitnormE <- function(
@@ -427,6 +434,8 @@ twSigmaLogitnorm <- function(
 	mle		##<< numeric vector: the mode of the density function
 	,mu=0	##<< for mu=0 the distribution will be the flattest case (maybe bimodal) 
 ){
+    ##details<<
+    ## For a mostly flat unimodal distribution use \code{\link{twCoefLogitnormMLE}(mle,0)}
 	sigma = sqrt( (logit(mle)-mu)/(2*mle-1) )
 	##seealso<< \code{\link{logitnorm}}
 	# twSigmaLogitnorm
@@ -436,18 +445,16 @@ twSigmaLogitnorm <- function(
 }
 #mtrace(coefLogitnorm)
 attr(twSigmaLogitnorm,"ex") <- function(){
-	
-	# estimate the parameters, with mode 0.7 and upper quantile 0.9
-	(theta <- twCoefLogitnormMLE(0.7,0.9))
-	
+    mle <- 0.8
+    (theta <- twSigmaLogitnorm(mle))
+    #
 	x <- seq(0,1,length.out=41)[-c(1,41)]	# plotting grid
 	px <- plogitnorm(x,mu=theta[1],sigma=theta[2])	#percentiles function
-	plot(px~x); abline(v=c(0.7,0.9),col="gray"); abline(h=c(0.999),col="gray")
+	plot(px~x); abline(v=c(mle),col="gray")
 	dx <- dlogitnorm(x,mu=theta[1],sigma=theta[2])	#density function
-	plot(dx~x); abline(v=c(0.7,0.9),col="gray")
-	
+	plot(dx~x); abline(v=c(mle),col="gray")
 	# vectorized
-	(theta <- twCoefLogitnormMLE(mle=seq(0.4,0.8,by=0.1),quant=0.9))
+	(theta <- twSigmaLogitnorm(mle=seq(0.401,0.8,by=0.1)))
 }
 
 
