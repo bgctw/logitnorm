@@ -1,6 +1,6 @@
 Package: logitnorm
 Title: Functions for the logitnormal distribution.
-Version: 0.8.30
+Version: 0.8.31
 Date: 2015-10-08
 Author: Thomas Wutzler
 Maintainer: Thomas Wutzler <twutz@bgc-jena.mpg.de>
