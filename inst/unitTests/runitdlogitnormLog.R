@@ -1,4 +1,4 @@
-require(logitnorm)
+#require(logitnorm)
 
 test.dlogitnorm <- function() {
 	# Check dlogitnorm with arbitrary parameters at arbitrary points.
@@ -20,9 +20,3 @@ test.plogitnorm <- function() {
 	stopifnot(all.equal(pnorm(log(x/(1-x)), m, s, log=TRUE), log(plogitnorm(x, m, s))))
 }
 
-run.tests <- function() {
-	test.dlogitnorm()
-	test.plogitnorm()
-}
-
-run.tests()

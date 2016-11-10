@@ -1,5 +1,3 @@
-#TODO
-
 .setUp <-function () {
 	#library(MASS)
 	.setUpDf <- within( list(),{
