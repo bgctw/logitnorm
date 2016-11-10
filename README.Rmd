@@ -42,8 +42,8 @@ devtools::install_github("bgctw/logitnorm")
 See the package vignette for an introduction.
 
 A simple example estimates distribution parameters from observation
-statistics of mode 0.7 and upper quantile 0.9. Next, the density is plotted
-for across a range of quantiles.
+statistics of mode 0.7 and upper quantile 0.9. Next, the density is
+computed and plotted across a range of quantiles.
  
 ```{r example}
 (theta <- twCoefLogitnormMLE(0.7,0.9))
