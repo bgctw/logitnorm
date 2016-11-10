@@ -2,7 +2,11 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- 
+README.md is generated from README.Rmd. Please edit that file
+knit("README.Rmd") 
+-->
+
 
 
 
@@ -13,8 +17,8 @@ output: github_document
 `logitnorm` package provides support for the univariate
 [logit-normal
 distribution](https://en.wikipedia.org/wiki/Logit-normal_distribution). In
-addition to the usual randon, density, percential, and quantile function, it
-helps with distribution parameters from observations.
+addition to the usual random, density, percential, and quantile function, it
+helps with estimating distribution parameters from observations statistics.
 
 ## Installation
 
@@ -33,8 +37,8 @@ devtools::install_github("bgctw/logitnorm")
 See the package vignette for an introduction.
 
 A simple example estimates distribution parameters from observation
-statistics of mode 0.7 and upper quantile 0.9. Next, the density is plotted
-for across a range of quantiles.
+statistics of mode 0.7 and upper quantile 0.9. Next, the density is
+computed and plotted across a range of quantiles.
  
 
 ```r
