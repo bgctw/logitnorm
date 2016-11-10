@@ -51,6 +51,7 @@ dlogitnorm <- function(
         ### Density function of logitnormal distribution	
         q		##<< quantiles
         ,mu = 0, sigma = 1	##<< distribution parameters
+        ,log = FALSE    ##<< if TRUE, the log-density is returned
         ,...	##<< further arguments passed to \code{\link{dnorm}}: \code{mean}, and \code{sd} for mu and sigma respectively.  
 ){
     ##alias<< logitnorm
@@ -88,10 +89,13 @@ dlogitnorm <- function(
     ## }
     ## }}
     
-    ##detail<< log=TRUE does not work. Please use \code{log(dlogitnorm(...))}
-    
     ql <- qlogis(q)
-    dnorm(ql,mean=mu,sd=sigma,...) /q/(1-q)	# multiply by the Jacobian (derivative) of the back-Transformation (logit)
+    # multiply (or add in the log domain) by the Jacobian (derivative) of the back-Transformation (logit)
+    if (log) {
+        dnorm(ql,mean=mu,sd=sigma,log=TRUE,...) - log(q) - log1p(-q)
+    } else {
+        dnorm(ql,mean=mu,sd=sigma,...) /q/(1-q)
+    }
 }
 
 qlogitnorm <- function(
