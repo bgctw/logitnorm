@@ -1,7 +1,7 @@
 Package: logitnorm
-Title: Functions for the logitnormal distribution
+Title: Functions for the Logitnormal Distribution
 Version: 0.8.33
-Date: 2015-10-08
+Date: 2016-11-10
 Author: Thomas Wutzler
 Maintainer: Thomas Wutzler <twutz@bgc-jena.mpg.de>
 Description: Density, distribution, quantile and random generation function for the logitnormal distribution. Estimation of the mode and the first two moments. Estimation of distribution parameters.
