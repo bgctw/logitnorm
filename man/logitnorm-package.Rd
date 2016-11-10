@@ -37,6 +37,7 @@ Moments and mode
 Estimating parameters 
  \itemize{
  \item{from mode and upper quantile: \code{\link{twCoefLogitnormMLE}} }
+ \item{from mode and constraint to be unimodal and maximally flat: \code{\link{twCoefLogitnormMLEFlat}} }
  \item{from median and upper quantile: \code{\link{twCoefLogitnorm}} }
  \item{from expected value, i.e. mean and upper quantile: \code{\link{twCoefLogitnormE}} }
  \item{from a confidence interval which is symmetric at normal scale: \code{\link{twCoefLogitnormCi}} }

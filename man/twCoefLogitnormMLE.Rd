@@ -32,5 +32,5 @@ plot(dx~x); abline(v=c(0.7,0.9),col="gray")
 (theta <- twCoefLogitnormMLE(mle=seq(0.4,0.8,by=0.1),quant=0.9))
     
     # flat
-    (theta <- twCoefLogitnormMLE(0.7,0))
+    (theta <- twCoefLogitnormMLEFlat(0.7))
 }

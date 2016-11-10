@@ -3,6 +3,10 @@
 ^README\.Rmd$       # An Rmarkdown file used to generate README.md
 ^cran-comments\.md$ # Comments for CRAN submission
 ^NEWS\.md$          # A news file written in Markdown
+vignettes/figure	
+vignettes/cache	
+^scratch$
+^tmp$
 ^.git$
 ^.gitignore$
 ^.project$	    # added by eclipse 

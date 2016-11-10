@@ -11,9 +11,6 @@
 
 
 \details{
-The logitnormal distribution is useful as a prior density for variables that are bounded between 0 and 1, 
-such as proportions. Fig. 1 displays its density for various combinations of parameters mu and sigma.
-
 The package provides the main distribution functions:
 \itemize{
 \item density \code{\link{dlogitnorm}},
@@ -37,12 +34,14 @@ Moments and mode
 Estimating parameters 
  \itemize{
  \item{from mode and upper quantile: \code{\link{twCoefLogitnormMLE}} }
+ \item{from mode and constraint to be unimodal and maximally flat: \code{\link{twCoefLogitnormMLEFlat}} }
  \item{from median and upper quantile: \code{\link{twCoefLogitnorm}} }
  \item{from expected value, i.e. mean and upper quantile: \code{\link{twCoefLogitnormE}} }
  \item{from a confidence interval which is symmetric at normal scale: \code{\link{twCoefLogitnormCi}} }
  \item{from prescribed quantiles: \code{\link{twCoefLogitnormN}} }
  }
 
+Have a look at the package vignettes.
  }%details
 
 \references{

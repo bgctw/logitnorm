@@ -294,7 +294,19 @@ attr(twCoefLogitnormMLE,"ex") <- function(){
 	(theta <- twCoefLogitnormMLE(mle=seq(0.4,0.8,by=0.1),quant=0.9))
     
     # flat
-    (theta <- twCoefLogitnormMLE(0.7,0))
+    (theta <- twCoefLogitnormMLEFlat(0.7))
+}
+
+twCoefLogitnormMLEFlat <- function(
+		### Estimating coefficients of a maximally flat unimodal logitnormal distribution from mode 	
+		mle						##<< numeric vector: the mode of the density function
+){
+	##details<<
+	## When increasing the sigma parameter, the distribution becomes
+	## eventually becomes bi-model, i.e. has two maxima.	
+	## This function estimates parameters for given mode, so that the distribution assigns high  
+	## densitiy to a maximum range, i.e. is maximally flat, but still is unimodal.
+	twCoefLogitnormMLE(mle,0)
 }
 
 .ofLogitnormE <- function(
