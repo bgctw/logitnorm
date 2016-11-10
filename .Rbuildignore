@@ -1,9 +1,8 @@
-^.*\.Rproj$         # Automatically added by RStudio,
-^\.Rproj\.user$     # used for temporary files. 
-^cran-comments\.md$ # Comments for CRAN submission
+^.*\.Rproj$         
+^\.Rproj\.user$      
 ^README\.Rmd$
 ^README-.*\.png$
-^NEWS\.md$          # A news file written in Markdown
+^NEWS\.md$          
 vignettes/figure	
 vignettes/cache	
 ^scratch$
@@ -12,3 +11,5 @@ vignettes/cache
 ^.gitignore$
 ^.project$	    # added by eclipse 
 ^NEWS\.md$
+^cranComments.md$
+
