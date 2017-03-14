@@ -4,7 +4,7 @@ output: github_document
 
 <!-- 
 README.md is generated from README.Rmd. Please edit that file
-knit("README.Rmd") 
+knitr::knit("README.Rmd") 
 -->
 
 
@@ -51,4 +51,4 @@ plot(d~x,type="l")
 abline(v=c(0.7,0.9), col="grey")
 ```
 
-![plot of chunk example](README-example-1.png)
+![plot of chunk example](tools/README-example-1.png)

@@ -1,7 +1,9 @@
 ^.*\.Rproj$         
 ^\.Rproj\.user$      
 ^README\.Rmd$
+^README\.md$
 ^README-.*\.png$
+^NEWS\.Rmd$          
 ^NEWS\.md$          
 vignettes/figure	
 vignettes/cache	
@@ -10,6 +12,5 @@ vignettes/cache
 ^.git$
 ^.gitignore$
 ^.project$	    # added by eclipse 
-^NEWS\.md$
 ^cranComments.md$
 

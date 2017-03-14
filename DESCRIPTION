@@ -1,7 +1,7 @@
 Package: logitnorm
 Title: Functions for the Logitnormal Distribution
-Version: 0.8.33
-Date: 2016-11-10
+Version: 0.8.34
+Date: 2017-03-14
 Author: Thomas Wutzler
 Maintainer: Thomas Wutzler <twutz@bgc-jena.mpg.de>
 Description: Density, distribution, quantile and random generation function for the logitnormal distribution. Estimation of the mode and the first two moments. Estimation of distribution parameters.
@@ -9,4 +9,4 @@ Depends:
 Suggests: RUnit, knitr, ggplot2, reshape2
 VignetteBuilder: knitr
 License: GPL-2
-LazyLoad: yes
+LazyData: true

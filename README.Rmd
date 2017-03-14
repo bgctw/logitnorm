@@ -4,7 +4,7 @@ output: github_document
 
 <!-- 
 README.md is generated from README.Rmd. Please edit that file
-knit("README.Rmd") 
+knitr::knit("README.Rmd") 
 -->
 
 
@@ -12,7 +12,7 @@ knit("README.Rmd")
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "tools/README-"
 )
 ```
 
