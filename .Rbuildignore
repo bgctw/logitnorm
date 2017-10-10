@@ -14,3 +14,4 @@ vignettes/cache
 ^.project$	    # added by eclipse 
 ^cranComments.md$
 
+^\.travis\.yml$
