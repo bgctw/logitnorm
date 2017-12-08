@@ -1,3 +1,6 @@
+# logitnorm 0.8.35
+Avoid writing file reports during testing and installation.
+
 # logitnorm 0.8.33
 
 ## New features

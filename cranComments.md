@@ -1,14 +1,13 @@
 ## Test environments
-* local Windows install, R 3.2.4 64bit
-* all checks from r-forge (https://r-forge.r-project.org/R/?group_id=886)
+* local R3.4.3 on Mint 17 64bit
+* Ubuntu 14.04 (on travis-ci), R 3.4.1
+* win-builder (devel and release)
 
 ## R CMD check results
-There were no ERRORs nor WARNINGs 
+There were no ERRORs nor WARNINGs nor NOTEs
 
-On r-forge - Windows there was one Note:
- 
- Files 'README.md' or 'NEWS.md' cannot be checked without 'pandoc' being installed.
- 
- these files are listed in .Rbuildignore 
+## Notes
+Avoid writing file reports during testing and installation, in response
+to email from Kurt Hornik Dez, 2nd 2017
 
   

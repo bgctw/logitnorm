@@ -10,7 +10,7 @@
 }%description
 
 
-\details{
+\details{
 The logitnormal distribution is useful as a prior density for variables that are bounded between 0 and 1, 
 such as proportions. Fig. 1 displays its density for various combinations of parameters mu and sigma.
 
@@ -49,7 +49,7 @@ Estimating parameters
 \references{
 Frederic, P. & Lad, F. (2008) Two Moments of the Logitnormal Distribution. 
 Communications in Statistics-Simulation and Computation, 37, 1263-1269 
-}%references
+}%references
 \author{Thomas Wutzler}
 
 \keyword{ package }
