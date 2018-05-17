@@ -13,4 +13,5 @@ vignettes/cache
 ^.gitignore$
 ^.project$	    
 ^cranComments.md$
+^cran-comments.md$
 ^\.travis\.yml$
