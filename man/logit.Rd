@@ -9,7 +9,7 @@
   \item{\dots}{
 }
 }
-\details{function \eqn{ logit(p)= log \left( \frac{p}{1-p} \right) = log(p) - log(1-p) }}
+\details{function \eqn{logit(p) = log \left( \frac{p}{1-p} \right) = log(p) - log(1-p)}}
 
 
 \author{Thomas Wutzler}
