@@ -1,3 +1,7 @@
+.tmp.f <- function(){
+  library(RUnit)
+}
+
 .setUp <- function() {
 	#library(MASS)
 	.setUpDf <- within( list(),{
@@ -31,6 +35,13 @@ test.plogitnorm <- function(){
 	#plot( px ~ logit(x))
 	#lines( pnorm( logit(x)) ~ logit(x) )
 }
+
+test.dlogitnorm <- function(){
+  q <- c(-1,0,0.5,1,2)
+  ans <- suppressWarnings(dlogitnorm(q))
+  checkEquals(c(0,0,1.595769,0,0), ans, tolerance = 1e-7)
+}
+
 
 test.twCoefLogitnorm <- function(){
 	theta <- twCoefLogitnorm(0.7,0.9,perc = 0.999)

@@ -66,13 +66,21 @@ dlogitnorm <- function(
   ## }
   ## }}
   ##seealso<< \code{\link{logitnorm}}
+  ##details<< The function is only defined in interval (0,1), but the density 
+  ## returns 0 outside the support region.
   ql <- qlogis(q)
   # multiply (or add in the log domain) by the Jacobian (derivative) of the
   # back-Transformation (logit)
   if (log) {
-    dnorm(ql,mean = mu,sd = sigma,log = TRUE,...) - log(q) - log1p(-q)
+    ifelse(
+      q <= 0 | q >= 1, 0, 
+      dnorm(ql, mean = mu, sd = sigma, log = TRUE, ...) - log(q) - log1p(-q)
+    )
   } else {
-    dnorm(ql,mean = mu,sd = sigma,...)/q/(1 - q)
+    ifelse(
+      q <= 0 | q >= 1, 0, 
+      dnorm(ql,mean = mu,sd = sigma,...)/q/(1 - q)
+    )
   }
 }
 

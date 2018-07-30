@@ -1,3 +1,7 @@
+# logitnorm 0.8.37
+
+- Density returns 0 instead of NAN outside (0,1)
+
 # logitnorm 0.8.36
 Remove the library call to MASS.
 

@@ -10,7 +10,8 @@
   \item{sigma}{
 }
   \item{log}{if TRUE, the log-density is returned}
-  \item{\dots}{further arguments passed to \code{\link{dnorm}}: \code{mean}, and \code{sd} for mu and sigma respectively.}
+  \item{\dots}{further arguments passed to \code{\link{dnorm}}: \code{mean},
+and \code{sd} for mu and sigma respectively.  }
 }
 \details{\describe{\item{Logitnorm distribution}{ 
 \itemize{
@@ -19,7 +20,10 @@
 \item{quantile function: \code{\link{qlogitnorm}} }
 \item{random generation function: \code{\link{rlogitnorm}} }
 }
-}}}
+}}
+
+The function is only defined in interval (0,1), but the density 
+returns 0 outside the support region.}
 
 
 \author{Thomas Wutzler}
