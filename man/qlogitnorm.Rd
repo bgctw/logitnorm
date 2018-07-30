@@ -4,8 +4,7 @@
 \description{Quantiles of logitnormal distribution.	}
 \usage{qlogitnorm(p, mu = 0, sigma = 1, ...)}
 \arguments{
-  \item{p}{
-}
+  \item{p}{vector of probabilities}
   \item{mu}{distribution parameters}
   \item{sigma}{
 }
