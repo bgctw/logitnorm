@@ -2,10 +2,10 @@
 \alias{dlogitnorm}
 \title{dlogitnorm}
 \description{Density function of logitnormal distribution	}
-\usage{dlogitnorm(q, mu = 0, sigma = 1, log = FALSE, 
+\usage{dlogitnorm(x, mu = 0, sigma = 1, log = FALSE, 
     ...)}
 \arguments{
-  \item{q}{quantiles}
+  \item{x}{vector of quantiles}
   \item{mu}{distribution parameters}
   \item{sigma}{
 }

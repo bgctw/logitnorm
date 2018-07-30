@@ -39,7 +39,7 @@ rlogitnorm <- function(
 
 plogitnorm <- function(
   ### Distribution function for logitnormal distribution	
-  q
+  q  ##<< vector of quantiles
   , mu = 0, sigma = 1	##<< distribution parameters
   , ...
 ){
@@ -51,7 +51,7 @@ plogitnorm <- function(
 
 dlogitnorm <- function(
   ### Density function of logitnormal distribution	
-  q		##<< quantiles
+  x		##<< vector of quantiles
   , mu = 0, sigma = 1	##<< distribution parameters
   , log = FALSE    ##<< if TRUE, the log-density is returned
   , ...	##<< further arguments passed to \code{\link{dnorm}}: \code{mean}, 
@@ -68,25 +68,25 @@ dlogitnorm <- function(
   ##seealso<< \code{\link{logitnorm}}
   ##details<< The function is only defined in interval (0,1), but the density 
   ## returns 0 outside the support region.
-  ql <- qlogis(q)
+  ql <- qlogis(x)
   # multiply (or add in the log domain) by the Jacobian (derivative) of the
   # back-Transformation (logit)
   if (log) {
     ifelse(
-      q <= 0 | q >= 1, 0, 
-      dnorm(ql, mean = mu, sd = sigma, log = TRUE, ...) - log(q) - log1p(-q)
+      x <= 0 | x >= 1, 0, 
+      dnorm(ql, mean = mu, sd = sigma, log = TRUE, ...) - log(x) - log1p(-x)
     )
   } else {
     ifelse(
-      q <= 0 | q >= 1, 0, 
-      dnorm(ql,mean = mu,sd = sigma,...)/q/(1 - q)
+      x <= 0 | x >= 1, 0, 
+      dnorm(ql,mean = mu,sd = sigma,...)/x/(1 - x)
     )
   }
 }
 
 qlogitnorm <- function(
   ### Quantiles of logitnormal distribution.	
-  p
+  p ##<< vector of probabilities
   , mu = 0, sigma = 1	##<< distribution parameters
   , ...
 ){
