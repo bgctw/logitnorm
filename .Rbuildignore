@@ -4,7 +4,6 @@
 ^README\.md$
 ^README-.*\.png$
 ^NEWS\.Rmd$          
-^NEWS\.md$          
 vignettes/figure	
 vignettes/cache	
 ^scratch$

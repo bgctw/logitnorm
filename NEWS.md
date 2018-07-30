@@ -1,3 +1,6 @@
+# logitnorm 0.8.36
+Remove the library call to MASS.
+
 # logitnorm 0.8.35
 Avoid writing file reports during testing and installation.
 
