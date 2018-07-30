@@ -2,11 +2,11 @@
 \alias{rlogitnorm}
 \title{rlogitnorm}
 \description{Random number generation for logitnormal distribution}
-\usage{rlogitnorm(mu = 0, sigma = 1, ...)}
+\usage{rlogitnorm(n, mu = 0, sigma = 1, ...)}
 \arguments{
-  \item{mu}{distribution parameters}
-  \item{sigma}{
-}
+  \item{n}{number of observations}
+  \item{mu}{distribution parameter}
+  \item{sigma}{distribution parameter}
   \item{\dots}{arguments to \code{\link{rnorm}}}
 }
 

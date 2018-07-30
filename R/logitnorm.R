@@ -30,11 +30,13 @@ invlogit <- function(
 
 rlogitnorm <- function(
   ### Random number generation for logitnormal distribution
-  mu = 0, sigma = 1,	##<< distribution parameters
+  n,          ##<< number of observations
+  mu = 0,     ##<< distribution parameter
+  sigma = 1,	##<< distribution parameter
   ...	##<< arguments to \code{\link{rnorm}}
 ){	
   ##seealso<< \code{\link{logitnorm}}
-  plogis( rnorm(mean = mu,sd = sigma,...) ) 
+  plogis( rnorm(n = n, mean = mu, sd = sigma, ...) ) 
 }
 
 plogitnorm <- function(
