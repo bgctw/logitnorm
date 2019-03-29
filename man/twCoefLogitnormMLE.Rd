@@ -6,7 +6,8 @@
 \arguments{
   \item{mle}{numeric vector: the mode of the density function}
   \item{quant}{numeric vector: the upper quantile value}
-  \item{perc}{numeric vector: the probability for which the quantile was specified}
+  \item{perc}{numeric vector: the probability for which the quantile
+was specified}
 }
 
 \value{numeric matrix with columns \code{c("mu","sigma")}
@@ -18,19 +19,18 @@ rows correspond to rows in \code{mle}, \code{quant}, and \code{perc}}
 
 \seealso{\code{\link{logitnorm}}}
 \examples{
-
 # estimate the parameters, with mode 0.7 and upper quantile 0.9
-(theta <- twCoefLogitnormMLE(0.7,0.9))
-
+mode = 0.7; upper = 0.9
+mode = 0.2; upper = 0.7
+#mode = 0.5; upper = 0.9
+(theta <- twCoefLogitnormMLE(mode,upper))
 x <- seq(0,1,length.out = 41)[-c(1,41)]	# plotting grid
 px <- plogitnorm(x,mu = theta[1],sigma = theta[2])	#percentiles function
-plot(px~x); abline(v = c(0.7,0.9),col = "gray"); abline(h = c(0.999),col = "gray")
+plot(px~x); abline(v = c(mode,upper),col = "gray"); abline(h = c(0.999),col = "gray")
 dx <- dlogitnorm(x,mu = theta[1],sigma = theta[2])	#density function
-plot(dx~x); abline(v = c(0.7,0.9),col = "gray")
-
+plot(dx~x); abline(v = c(mode,upper),col = "gray")
 # vectorized
-(theta <- twCoefLogitnormMLE(mle = seq(0.4,0.8,by = 0.1),quant = 0.9))
-
+(theta <- twCoefLogitnormMLE(mle = seq(0.4,0.8,by = 0.1),quant = upper))
 # flat
-(theta <- twCoefLogitnormMLEFlat(0.7))
+(theta <- twCoefLogitnormMLEFlat(mode))
 }

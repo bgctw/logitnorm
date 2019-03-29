@@ -8,15 +8,18 @@
 \arguments{
   \item{mean}{the expected value of the density function}
   \item{quant}{the quantile values}
-  \item{perc}{the probabilities for which the quantiles were specified}
+  \item{perc}{the probabilities for which the quantiles were
+specified}
   \item{method}{method of optimization (see \code{\link{optim}})}
   \item{theta0}{starting parameters}
-  \item{returnDetails}{if TRUE, the full output of optim is returned with attribute resOptim}
+  \item{returnDetails}{if TRUE, the full output of optim is returned
+with attribute resOptim}
   \item{\dots}{
 }
 }
 
-\value{named numeric matrix with estimated parameters of the logitnormal distrubtion.
+\value{named numeric matrix with estimated parameters of the logitnormal 
+distrubtion.
 colnames: \code{c("mu","sigma")}}
 
 \author{Thomas Wutzler}

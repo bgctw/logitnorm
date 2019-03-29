@@ -164,48 +164,41 @@ twCoefLogitnorm <- function(
   median					##<< numeric vector: the median of the density function
   , quant					##<< numeric vector: the upper quantile value
   , perc = 0.975				##<< numeric vector: the probability for which the quantile was specified
-  , method = "BFGS"			##<< method of optimization (see \code{\link{optim}})
-  , theta0 = c(mu = 0,sigma = 1)	##<< starting parameters
-  , returnDetails = FALSE	##<< if TRUE, the full output of optim is attached as attributes resOptim
   , ... 
 ){
   ##seealso<< \code{\link{logitnorm}}
   # twCoefLogitnorm
-  names(theta0) <- c("mu","sigma")
-  nc <- c(length(median),length(quant),length(perc)) 
-  n <- max(nc)
-  res <- matrix( as.numeric(NA), n,2, dimnames = list(NULL,c("mu","sigma")))
-  resOptim <- list()
-  qmat <- cbind(median,quant)
-  pmat <- cbind(0.5,perc)
-  for (i in 1:n ){	# for each row in (recycled) vector
-    i0 <- i-1
-    tmp <- optim( theta0, .ofLogitnorm, perc = pmatI<-as.numeric(pmat[1+i0%%nrow(pmat),]), quant = (qmatI<-qmat[1+i0%%nrow(qmat),]), method = method, ...)
-    if (tmp$convergence == 0)
-      res[i,] <- tmp$par
-    else
-      warning(paste("coefLogitnorm: optim did not converge. theta0 = ",paste(theta0,collapse = ","),"; median = ",qmatI[1],"; quant = ",qmatI[2],"; perc = ",pmatI[2],sep = ""))
-    resOptim[[i]] <- tmp
-  }
-  if (returnDetails ) attr(res,"resOptim") <- resOptim
-  res
+  mu = logit(median)
+  upperLogit = logit(quant)
+  sigmaFac = qnorm(perc)
+  sigma = 1/sigmaFac*(upperLogit - mu)
+  c(mu = mu, sigma = sigma)
   ### numeric matrix with columns \code{c("mu","sigma")}
   ### rows correspond to rows in median, quant, and perc
 }
 #mtrace(twCoefLogitnorm)
 attr(twCoefLogitnorm,"ex") <- function(){
   # estimate the parameters, with median at 0.7 and upper quantile at 0.9
-  (theta <- twCoefLogitnorm(0.7,0.9))
+  med = 0.7; upper = 0.9 
+  med = 0.2; upper = 0.4 
+  (theta <- twCoefLogitnorm(med,upper))
   
   x <- seq(0,1,length.out = 41)[-c(1,41)]	# plotting grid
   px <- plogitnorm(x,mu = theta[1],sigma = theta[2])	#percentiles function
-  plot(px~x); abline(v = c(0.7,0.9),col = "gray"); abline(h = c(0.5,0.975),col = "gray")
+  plot(px~x); abline(v = c(med,upper),col = "gray"); abline(h = c(0.5,0.975),col = "gray")
   
   dx <- dlogitnorm(x,mu = theta[1],sigma = theta[2])	#density function
-  plot(dx~x); abline(v = c(0.7,0.9),col = "gray")
+  plot(dx~x); abline(v = c(med,upper),col = "gray")
   
   # vectorized
   (theta <- twCoefLogitnorm(seq(0.4,0.8,by = 0.1),0.9))
+  
+  .tmp.f <- function(){
+    # xr = rlogitnorm(1e5, mu = theta["mu"], sigma = theta["sigma"])
+    # median(xr)
+    invlogit(theta["mu"])
+    qlogitnorm(0.975, mu = theta["mu"], sigma = theta["sigma"])
+  }
 }
 
 twCoefLogitnormCi <- function( 
@@ -213,26 +206,26 @@ twCoefLogitnormCi <- function(
   lower	##<< value at the lower quantile, i.e. practical minimum
   ,upper	##<< value at the upper quantile, i.e. practical maximum
   ,perc = 0.975	##<< numeric vector: the probability for which the quantile was specified
-  ,sigmaFac = qnorm(perc) 	##<< sigmaFac = 2 is 95% sigmaFac = 2.6 is 99% interval
-  ,isTransScale = FALSE ##<< if true lower and upper are already on logit scale
+  , sigmaFac = qnorm(perc) 	##<< sigmaFac = 2 is 95% sigmaFac = 2.6 is 99% interval
+  , isTransScale = FALSE ##<< if true lower and upper are already on logit scale
 ){	
   ##seealso<< \code{\link{logitnorm}}
-  if (!isTRUE(isTransScale) ){
+  if (!isTRUE(isTransScale) ) {
     lower <- logit(lower)
     upper <- logit(upper)
   }
-  halfWidth <- (upper-lower)/2
+  halfWidth <- (upper - lower)/2
   sigma <- halfWidth/sigmaFac
-  cbind( mu = upper-halfWidth, sigma = sigma )
+  cbind( mu = upper - halfWidth, sigma = sigma )
   ### named numeric vector: mu and sigma parameter of the logitnormal distribution.
 }
 attr(twCoefLogitnormCi,"ex") <- function(){
   mu = 2
   sd = c(1,0.8)
   p = 0.99
-  lower <- l <- qlogitnorm(1-p, mu, sd )		# p-confidence interval
+  lower <- l <- qlogitnorm(1 - p, mu, sd )		# p-confidence interval
   upper <- u <- qlogitnorm(p, mu, sd )		# p-confidence interval
-  cf <- twCoefLogitnormCi(lower,upper)	
+  cf <- twCoefLogitnormCi(lower,upper, perc = p)	
   all.equal( cf[,"mu"] , c(mu,mu) )
   all.equal( cf[,"sigma"] , sd )
 }
@@ -241,13 +234,13 @@ attr(twCoefLogitnormCi,"ex") <- function(){
   ### Objective function used by \code{\link{coefLogitnormMLE}}. 
   mu	##<< numeric vector of proposed parameter				
   ## make sure that logit(mu)<mle for mle>0.5 and logit(mu)>mle for mle<0.5
-  ,mle				##<< the mode of the density distribution
-  ,logitMle = logit(mle)##<< may provide for performance reasons
-  ,quant				##<< q are the quantiles for perc
-  ,perc = c(0.975) 
+  , mle				##<< the mode of the density distribution
+  , logitMle = logit(mle)##<< may provide for performance reasons
+  , quant				##<< q are the quantiles for perc
+  , perc = c(0.975) 
 ){
   # given mu and mle, we can calculate sigma
-  sigma2 = (logitMle-mu)/(2*mle-1)
+  sigma2 = (logitMle - mu)/(2*mle - 1)
   ifelse( sigma2 <= 0, Inf, {
     tmp.predp = plogitnorm(quant, mu = mu, sigma = sqrt(sigma2) )
     tmp.diff = tmp.predp - perc
@@ -257,9 +250,10 @@ attr(twCoefLogitnormCi,"ex") <- function(){
 
 twCoefLogitnormMLE <- function(
   ### Estimating coefficients of logitnormal distribution from mode and upper quantile	
-  mle						##<< numeric vector: the mode of the density function
+  mle						  ##<< numeric vector: the mode of the density function
   ,quant					##<< numeric vector: the upper quantile value
-  ,perc = 0.999				##<< numeric vector: the probability for which the quantile was specified
+  ,perc = 0.999		##<< numeric vector: the probability for which the quantile 
+  ## was specified
   #, ... 					##<< Further parameters to \code{\link{optimize}}
 ){
   ##seealso<< \code{\link{logitnorm}}
@@ -267,27 +261,42 @@ twCoefLogitnormMLE <- function(
   nc <- c(length(mle),length(quant),length(perc)) 
   n <- max(nc)
   res <- matrix( as.numeric(NA), n,2, dimnames = list(NULL,c("mu","sigma")))
-  for (i in 1:n ){
-    i0 <- i-1
-    mleI<-mle[1+i0%%nc[1]]
-    if (mleI == 0.5) mleI = 0.5-.Machine$double.eps	# in order to estimate sigma
+  for (i in 1:n ) {
+    i0 <- i - 1
+    mleI <- mle[1 + i0 %% nc[1]]
+    quantI <- quant[1 + i0 %% nc[2]]
+    percI <- perc[1 + i0 %% nc[3]]
+    if (mleI == 0.5) {
+      # if mode is at 0.5 its symmetrical and corresponds to median
+      mu = 0
+      res[i,] = twCoefLogitnorm(0.5, quantI, percI)
+      break()
+    }
+    # in order to estimate sigma
     # we now that mu is in (\code{logit(mle)},0) for \code{mle < 0.5} and in 
     # \code{(0,logit(mle))} for \code{mle > 0.5} for unimodal distribution
     # there might be a maximum in the middle and optimized misses the low part
-    # hence, first get near the global minimum by a evaluating the cost at a grid
-    # grid is spaced narrower at the edge
-    logitMle <- logit(mleI)
+    # hence, first get near the global minimum by a evaluating the cost at a 
+    # grid that is spaced narrower at the edge
+    # 
     #intv <- if (logitMle < 0) c(logitMle+.Machine$double.eps,0) else c(0,logitMle-.Machine$double.eps)
-    upper <- abs(logitMle)-.Machine$double.eps
-    tmp <- sign(logitMle)*log(seq(1,exp(upper),length.out = 40))
-    oftmp<-.ofLogitnormMLE(tmp, mle = (mleI), logitMle = logitMle, quant = (quantI<-quant[1+i0%%nc[2]]), perc = (percI<-perc[1+i0%%nc[3]]))
-    #plot(tmp,oftmp)
+    logitMle <- logit(mleI)
+    upper <- abs(logitMle) - .Machine$double.eps
+    muTry <- sign(logitMle)*log(seq(1,exp(upper),length.out = 40))
+    ofMuTry <- .ofLogitnormMLE(
+      muTry, mle = (mleI), logitMle = logitMle
+      , quant = (quantI <- quant[1 + i0 %% nc[2]])
+      , perc = (percI <- perc[1 + i0 %% nc[3]]))
+    #plot(muTry,ofMuTry)
     # now optimize starting from the near minimum
-    imin <- which.min(oftmp)
-    intv <- tmp[ c(max(1,imin-1), min(length(tmp),imin+1)) ]
+    imin <- which.min(ofMuTry)
+    intv <- muTry[ c(max(1,imin - 1), min(length(muTry),imin + 1)) ]
     if (diff(intv) == 0 ) mu <- intv[1] else
-      mu <- optimize( .ofLogitnormMLE, interval = intv, mle = (mleI), logitMle = logitMle, quant = (quantI<-quant[1+i0%%nc[2]]), perc = (percI<-perc[1+i0%%nc[3]]))$minimum
-    sigma <- sqrt((logitMle-mu)/(2*mleI-1))
+      mu <- optimize( 
+        .ofLogitnormMLE, interval = intv, mle = (mleI), logitMle = logitMle
+        , quant = quantI
+        , perc = percI)$minimum
+      sigma <- sqrt((logitMle - mu)/(2*mleI - 1))
     res[i,] <- c(mu,sigma)
   }
   res
@@ -296,21 +305,20 @@ twCoefLogitnormMLE <- function(
 }
 #mtrace(coefLogitnorm)
 attr(twCoefLogitnormMLE,"ex") <- function(){
-  
   # estimate the parameters, with mode 0.7 and upper quantile 0.9
-  (theta <- twCoefLogitnormMLE(0.7,0.9))
-  
+  mode = 0.7; upper = 0.9
+  mode = 0.2; upper = 0.7
+  #mode = 0.5; upper = 0.9
+  (theta <- twCoefLogitnormMLE(mode,upper))
   x <- seq(0,1,length.out = 41)[-c(1,41)]	# plotting grid
   px <- plogitnorm(x,mu = theta[1],sigma = theta[2])	#percentiles function
-  plot(px~x); abline(v = c(0.7,0.9),col = "gray"); abline(h = c(0.999),col = "gray")
+  plot(px~x); abline(v = c(mode,upper),col = "gray"); abline(h = c(0.999),col = "gray")
   dx <- dlogitnorm(x,mu = theta[1],sigma = theta[2])	#density function
-  plot(dx~x); abline(v = c(0.7,0.9),col = "gray")
-  
+  plot(dx~x); abline(v = c(mode,upper),col = "gray")
   # vectorized
-  (theta <- twCoefLogitnormMLE(mle = seq(0.4,0.8,by = 0.1),quant = 0.9))
-  
+  (theta <- twCoefLogitnormMLE(mle = seq(0.4,0.8,by = 0.1),quant = upper))
   # flat
-  (theta <- twCoefLogitnormMLEFlat(0.7))
+  (theta <- twCoefLogitnormMLEFlat(mode))
 }
 
 twCoefLogitnormMLEFlat <- function(
@@ -345,10 +353,12 @@ twCoefLogitnormE <- function(
   ### Estimating coefficients of logitnormal distribution from expected value, i.e. mean, and upper quantile.	
   mean					##<< the expected value of the density function
   , quant					##<< the quantile values
-  , perc = c(0.975)			##<< the probabilities for which the quantiles were specified
+  , perc = c(0.975)			##<< the probabilities for which the quantiles were 
+  ## specified
   , method = "BFGS"			##<< method of optimization (see \code{\link{optim}})
   , theta0 = c(mu = 0,sigma = 1)	##<< starting parameters
-  , returnDetails = FALSE	##<< if TRUE, the full output of optim is returned with attribute resOptim
+  , returnDetails = FALSE	##<< if TRUE, the full output of optim is returned 
+  ## with attribute resOptim
   , ... 
 ){
   ##seealso<< \code{\link{logitnorm}}
@@ -358,19 +368,24 @@ twCoefLogitnormE <- function(
   n <- nrow(mqp)
   res <- matrix( as.numeric(NA), n,2, dimnames = list(NULL,c("mu","sigma")))
   resOptim <- list()
-  for (i in 1:n ){
-    mqpi<- mqp[i,]
-    tmp <- optim( theta0, .ofLogitnormE, mean = mqpi[1], quant = mqpi[2], perc = mqpi[3], method = method, ...)
+  for (i in 1:n ) {
+    mqpi <- mqp[i,]
+    tmp <- optim(
+      theta0, .ofLogitnormE, mean = mqpi[1], quant = mqpi[2], perc = mqpi[3]
+      , method = method, ...)
     resOptim[[i]] <- tmp
     if (tmp$convergence != 0)
-      warning(paste("coefLogitnorm: optim did not converge. theta0 = ",paste(theta0,collapse = ",")))
+      warning(paste(
+        "coefLogitnorm: optim did not converge. theta0 = ",
+        paste(theta0,collapse = ",")))
     else
       res[i,] <- tmp$par
   }
   if (returnDetails )
     attr(res,"resOptim") <- resOptim
   res
-  ### named numeric matrix with estimated parameters of the logitnormal distrubtion.
+  ### named numeric matrix with estimated parameters of the logitnormal 
+  ### distrubtion.
   ### colnames: \code{c("mu","sigma")}
 }
 #mtrace(coefLogitnorm)
