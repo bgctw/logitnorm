@@ -38,6 +38,7 @@ test.plogitnorm <- function(){
 
 test.dlogitnorm <- function(){
   q <- c(-1,0,0.5,1,2)
+  set.seed(0815)
   ans <- suppressWarnings(dlogitnorm(q))
   checkEquals(c(0,0,1.595769,0,0), ans, tolerance = 1e-7)
 }
@@ -80,7 +81,8 @@ test.twCoefLogitnormMLE <- function(){
 
 
 test.twCoefLogitnormE <- function(){
-	theta <- twCoefLogitnormE(0.7,0.9)
+  set.seed(0815)
+  theta <- twCoefLogitnormE(0.7,0.9)
 	px <- plogitnorm(x,mu = theta[1],sigma = theta[2])	#percentiles function
 	dx <- dlogitnorm(x,mu = theta[1],sigma = theta[2])	#density function
 	#plot(px~x); abline(v = c(0.7,0.9)); abline(h = c(0.5,0.975))

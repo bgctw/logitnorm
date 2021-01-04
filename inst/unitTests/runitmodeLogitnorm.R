@@ -13,6 +13,7 @@ test.rightMode <- function(){
 	dx <- dlogitnorm(xGrid, mu=theta0[1], sigma=theta0[2])
 	plot( dx~xGrid, type="l")
 	
+	set.seed(0815)
 	mle <- modeLogitnorm(mu=theta0[1], sigma=theta0[2] )
 	abline(v=mle,col="gray")
 	
@@ -30,6 +31,7 @@ test.leftMode <- function(){
 	dx <- dlogitnorm(xGrid, mu=theta0[1], sigma=theta0[2])
 	plot( dx~xGrid, type="l")
 	
+	set.seed(0815)
 	mle <- modeLogitnorm(mu=theta0[1], sigma=theta0[2] )
 	abline(v=mle,col="gray")
 	
