@@ -122,7 +122,7 @@ qlogitnorm <- function(
 }
 
 twCoefLogitnormN <- function(
-  ### Estimating coefficients from a vector of quantiles and perentiles (non-vectorized).	
+  ### Estimating coefficients from a vector of quantiles and percentiles (non-vectorized).	
   quant					##<< the quantile values
   ,perc = c(0.5,0.975)		##<< the probabilities for which the quantiles were specified
   , method = "BFGS"			##<< method of optimization (see \code{\link{optim}})
@@ -385,7 +385,7 @@ twCoefLogitnormE <- function(
     attr(res,"resOptim") <- resOptim
   res
   ### named numeric matrix with estimated parameters of the logitnormal 
-  ### distrubtion.
+  ### distribution.
   ### colnames: \code{c("mu","sigma")}
 }
 #mtrace(coefLogitnorm)

@@ -1,10 +1,9 @@
 ## Note
-Improved consistency with other R distribution methods.
+Added random seeds to tests to avoid accidental failing.
 
 ## Test environments
-* local R 3.4.4 on Mint17 64bit
-* Ubuntu 14.04.5 LTS (on travis-ci), 3.5.0
-* win-builder (devel and release)
+* local R 4.0.3 on Mint 20 64bit
+* r-hub.io
 
 ## R CMD check results
 There were no ERRORs nor WARNINGs nor NOTEs

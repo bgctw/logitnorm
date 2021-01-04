@@ -1,7 +1,7 @@
 \name{twCoefLogitnormN}
 \alias{twCoefLogitnormN}
 \title{twCoefLogitnormN}
-\description{Estimating coefficients from a vector of quantiles and perentiles (non-vectorized).	}
+\description{Estimating coefficients from a vector of quantiles and percentiles (non-vectorized).	}
 \usage{twCoefLogitnormN(quant, perc = c(0.5, 0.975), 
     method = "BFGS", theta0 = c(mu = 0, sigma = 1), 
     returnDetails = FALSE, ...)}

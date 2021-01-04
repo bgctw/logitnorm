@@ -19,7 +19,7 @@ knitr::knit("README.Rmd")
 `logitnorm` package provides support for the univariate
 [logit-normal
 distribution](https://en.wikipedia.org/wiki/Logit-normal_distribution). In
-addition to the usual random, density, percential, and quantile function, it
+addition to the usual random, density, percentile, and quantile function, it
 helps with estimating distribution parameters from observations statistics.
 
 ## Installation
@@ -45,12 +45,12 @@ computed and plotted across a range of quantiles.
 
 ```r
 (theta <- twCoefLogitnormMLE(0.7,0.9))
-#>             mu    sigma
-#> [1,] 0.7608886 0.464783
+#> Error in twCoefLogitnormMLE(0.7, 0.9): could not find function "twCoefLogitnormMLE"
 x <- seq(0,1, length.out=81) 
 d <- dlogitnorm(x, mu=theta[1,"mu"], sigma=theta[1,"sigma"])
+#> Error in dlogitnorm(x, mu = theta[1, "mu"], sigma = theta[1, "sigma"]): could not find function "dlogitnorm"
 plot(d~x,type="l")
+#> Error in eval(predvars, data, env): object 'd' not found
 abline(v=c(0.7,0.9), col="grey")
+#> Error in int_abline(a = a, b = b, h = h, v = v, untf = untf, ...): plot.new has not been called yet
 ```
-
-![plot of chunk example](tools/README-example-1.png)

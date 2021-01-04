@@ -10,7 +10,7 @@
 }%description
 
 
-\details{
+\details{
 The package provides the main distribution functions:
 \itemize{
 \item density \code{\link{dlogitnorm}},
@@ -47,7 +47,7 @@ Have a look at the package vignettes.
 \references{
 Frederic, P. & Lad, F. (2008) Two Moments of the Logitnormal Distribution. 
 Communications in Statistics-Simulation and Computation, 37, 1263-1269 
-}%references
+}%references
 \author{Thomas Wutzler}
 
 \keyword{ package }

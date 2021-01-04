@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 `logitnorm` package provides support for the univariate
 [logit-normal
 distribution](https://en.wikipedia.org/wiki/Logit-normal_distribution). In
-addition to the usual random, density, percential, and quantile function, it
+addition to the usual random, density, percentile, and quantile function, it
 helps with estimating distribution parameters from observations statistics.
 
 ## Installation

@@ -19,7 +19,7 @@ with attribute resOptim}
 }
 
 \value{named numeric matrix with estimated parameters of the logitnormal 
-distrubtion.
+distribution.
 colnames: \code{c("mu","sigma")}}
 
 \author{Thomas Wutzler}
