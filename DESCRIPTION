@@ -5,7 +5,7 @@ Author: Thomas Wutzler
 Maintainer: Thomas Wutzler <twutz@bgc-jena.mpg.de>
 Description: Density, distribution, quantile and random generation function for the logitnormal distribution. Estimation of the mode and the first two moments. Estimation of distribution parameters.
 Depends: 
-Suggests: RUnit, knitr, ggplot2, reshape2
+Suggests: RUnit, knitr, markdown, ggplot2, reshape2
 VignetteBuilder: knitr
 License: GPL-2
 LazyData: true

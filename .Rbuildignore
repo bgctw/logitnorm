@@ -14,3 +14,4 @@ vignettes/cache
 ^cranComments.md$
 ^cran-comments.md$
 ^\.travis\.yml$
+^CRAN-RELEASE$
