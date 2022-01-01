@@ -97,6 +97,8 @@ qlogitnorm <- function(
   plogis(qn)
 }
 
+# derivative of logit(x)
+.dlogit <- function(x) 1/x + 1/(1-x)
 
 #------------------ estimating parameters from fitting to distribution 
 .ofLogitnorm <- function(
@@ -307,8 +309,6 @@ twCoefLogitnormMLE <- function(
 attr(twCoefLogitnormMLE,"ex") <- function(){
   # estimate the parameters, with mode 0.7 and upper quantile 0.9
   mode = 0.7; upper = 0.9
-  mode = 0.2; upper = 0.7
-  #mode = 0.5; upper = 0.9
   (theta <- twCoefLogitnormMLE(mode,upper))
   x <- seq(0,1,length.out = 41)[-c(1,41)]	# plotting grid
   px <- plogitnorm(x,mu = theta[1],sigma = theta[2])	#percentiles function
@@ -321,17 +321,55 @@ attr(twCoefLogitnormMLE,"ex") <- function(){
   (theta <- twCoefLogitnormMLEFlat(mode))
 }
 
-twCoefLogitnormMLEFlat <- function(
-  ### Estimating coefficients of a maximally flat unimodal logitnormal distribution from mode 	
-  mle						##<< numeric vector: the mode of the density function
-){
-  ##details<<
-  ## When increasing the sigma parameter, the distribution becomes
-  ## eventually becomes bi-model, i.e. has two maxima.	
-  ## This function estimates parameters for given mode, so that the distribution assigns high  
-  ## density to a maximum range, i.e. is maximally flat, but still is unimodal.
-  twCoefLogitnormMLE(mle,0)
+.tmp.f <- function(){
+  (theta = twCoefLogitnormMLEFlat(0.9))
+  (theta = twCoefLogitnormMLEFlat(0.1))
+  (theta = twCoefLogitnormMLEFlat(0.5))
+  mle = c(0.7,0.2)
+  mle = seq(0.55,0.95,by=0.05)
+  mle = seq(0.95,0.99,by=0.01)
+  theta = twCoefLogitnormMLEFlat(mle)
+  sigma = theta[,2]
+  plot(sigma ~ mle)
+  (sigmac = 1/(2*mle*(1-mle)))
+  sigmac/sigma
+  plot(sigmac ~ mle)
 }
+
+twCoefLogitnormMLEFlat <- function(
+  ### Estimating coefficients of a maximally flat unimodal logitnormal distribution given the mode 	
+  mle		##<< numeric vector: the mode of the density function
+){
+  vectorList <- lapply(mle, .twCoefLogitnormMLEFlat_scalar)
+  do.call(rbind, vectorList)
+}
+  
+  
+.twCoefLogitnormMLEFlat_scalar <- function(mle){
+  if (mle == 0.5) {
+    #sigma =  sqrt(dlogit(mle)/2) # 1.414214
+    return(c(mu = 0.0, sigma = sqrt(2)))
+  } 
+  is_right <- mle > 0.5
+  mler = ifelse(is_right, mle, 1-mle)
+  xt <- optimize(.ofModeFlat, interval = c(0,0.5), m=mler, logitm=logit(mler))$minimum
+  sigma2 <- (1/xt + 1/(1-xt))/2
+  mur <- logit(mler) - sigma2*(2*mler - 1)
+  mu <- ifelse(is_right, mur, -mur)
+  c(mu = mu, sigma = sqrt(sigma2))
+}
+
+.ofModeFlat <- function(x, m, logitm = logit(m)){
+  # lhs = 1/x + 1/(1-x)
+  # rhs = (logitm - logit(x))/(m-x)
+  # lhs = (m-x)/x + (m-x)/(1-x)
+  # rhs = (logitm - logit(x))
+  lhs = m/x + (m-1)/(1-x)
+  rhs = logitm - logit(x)
+  d = lhs - rhs
+  d*d
+}
+
 
 .ofLogitnormE <- function(
   ### Objective function used by \code{\link{coefLogitnormE}}. 

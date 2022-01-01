@@ -1,3 +1,7 @@
+# logitnorm 0.8.38
+- Reworked twCoefLogitnormMLEFlat
+- Migrated from RUnit to testthat
+
 # logitnorm 0.8.37
 
 - Density returns 0 instead of NAN outside (0,1)

@@ -21,8 +21,6 @@ rows correspond to rows in \code{mle}, \code{quant}, and \code{perc}}
 \examples{
 # estimate the parameters, with mode 0.7 and upper quantile 0.9
 mode = 0.7; upper = 0.9
-mode = 0.2; upper = 0.7
-#mode = 0.5; upper = 0.9
 (theta <- twCoefLogitnormMLE(mode,upper))
 x <- seq(0,1,length.out = 41)[-c(1,41)]	# plotting grid
 px <- plogitnorm(x,mu = theta[1],sigma = theta[2])	#percentiles function

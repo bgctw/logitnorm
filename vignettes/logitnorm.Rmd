@@ -25,7 +25,7 @@ if( !require(ggplot2) ){
 	print("To generate this vignette, ggplo2 is required.")
 	exit(0)
 }
-library(reshape2)
+#library(reshape2)
 # genVigs("logitnorm")
 ```
 
@@ -49,21 +49,24 @@ sigma=10^seq(-0.5,0.5,length.out=5))
 n <- nrow(theta0)
 
 .calcDensityGrid <- function(
-		### Calculate lognormal desnity for given combinations
+		### Calculate logitnormal density for given combinations
 		theta0	##<< matrix with columns mu and sigma
 		,xGrid = seq(0,1, length.out=81)[-c(1,81)]
 ){ 
 	dx <- apply( theta0, 1, function(theta0i){
 				dx <- dlogitnorm(xGrid, mu=theta0i[1], sigma=theta0i[2])
 			})
-	dimnames(dx) <- list(iX=NULL,iTheta=NULL)
-	ds <- melt(dx)	# two variables over time
-	ds[1:10,]
-	ds$mu <- rep(as.factor(round(theta0[,1],2)), each=length(xGrid))
-	ds$sigma <- rep(as.factor(round(theta0[,2],2)), each=length(xGrid))
-	ds$x <- rep(xGrid, nrow(theta0))
-	ds
-	### data frame with columns value,x,mu and sigma 
+	# dimnames(dx) <- list(iX=NULL,iTheta=NULL)
+	# ds <- melt(dx)	# two variables over time
+	# ds <- gather(as.data.frame(dx))
+	# ds[1:10,]
+	ds <- data.frame(
+	  mu = rep(as.factor(round(theta0[,1],2)), each=length(xGrid)),
+	  sigma = rep(as.factor(round(theta0[,2],2)), each=length(xGrid)),
+	  x = rep(as.vector(xGrid), nrow(theta0)),
+	  value = as.vector(dx)
+	)
+	### data frame with columns value,x,mu and sigma, value (density at x) 
 }
 
 ds <- .calcDensityGrid(theta0,xGrid=xGrid)

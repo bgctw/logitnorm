@@ -1,86 +1,105 @@
 .tmp.f <- function(){
-  library(RUnit)
+  library(testthat)
 }
 
-.setUp <- function() {
-	#library(MASS)
-	.setUpDf <- within( list(),{
-			x <- seq(0,1,length.out = 41)[-c(1,41)]; 
-			#x[1] = x[1] + .Machine$double.eps; 
-			#x[length(x)] <- x[length(x)]- .Machine$double.eps
-			lx <- logit(x)			
-		})
-	attach(.setUpDf)
+# .setUp <- function() {
+# 	#library(MASS)
+# 	.setUpDf <- within( list(),{
+# 			x <- seq(0,1,length.out = 41)[-c(1,41)]; 
+# 			#x[1] = x[1] + .Machine$double.eps; 
+# 			#x[length(x)] <- x[length(x)]- .Machine$double.eps
+# 			lx <- logit(x)			
+# 		})
+# 	attach(.setUpDf)
+# }
+# 
+# .tearDown <- function() {
+# 	#detach(.setUpDf)
+# 	detach()
+# }
+
+local_x_l <- function(env = parent.frame()) {
+	env$x <- x <- seq(0,1,length.out = 41)[-c(1,41)];
+	env$lx <- lx <- logit(x)
 }
 
-.tearDown <- function() {
-	#detach(.setUpDf)
-	detach()
+.tmp.f <- function(){
+  local_x_l()
+  print(x) # replaced x
 }
+.tmp.f()
 
-
-
-test.inverseSame <- function(){
+test_that("inverseSame", {
+  local_x_l()
+  x
 	xnorm <- logit(x)
 	xinv <- invlogit(xnorm)
-	checkEquals(x, xinv)
-}
+	expect_equal(x, xinv)
+})
 
-test.plogitnorm <- function(){
-	px <- plogitnorm(x)	#percentiles
-	checkEquals( pnorm(lx), px)
+test_that("plogitnorm", {
+  local_x_l()
+  px <- plogitnorm(x)	#percentiles
+	expect_equal( pnorm(lx), px)
 	px2 <- plogitnorm(x,mu = 2,sigma = 1)
-	checkEquals( pnorm(lx,mean = 2,sd = 1), px2)
+	expect_equal( pnorm(lx,mean = 2,sd = 1), px2)
 	#plot( px ~ x)
 	#plot( px ~ logit(x))
 	#lines( pnorm( logit(x)) ~ logit(x) )
-}
+})
 
-test.dlogitnorm <- function(){
+test_that("dlogitnorm", {
+  local_x_l()
   q <- c(-1,0,0.5,1,2)
   set.seed(0815)
   ans <- suppressWarnings(dlogitnorm(q))
-  checkEquals(c(0,0,1.595769,0,0), ans, tolerance = 1e-7)
-}
+  expect_equal(c(0,0,1.595769,0,0), ans, tolerance = 1e-7)
+})
 
 
-test.twCoefLogitnorm <- function(){
-	theta <- twCoefLogitnorm(0.7,0.9,perc = 0.999)
+test_that("twCoefLogitnorm", {
+  local_x_l()
+  theta <- twCoefLogitnorm(0.7,0.9,perc = 0.999)
 	px <- plogitnorm(x,mu = theta[1],sigma = theta[2])	#percentiles function
 	dx <- dlogitnorm(x,mu = theta[1],sigma = theta[2])	#density function
 	#plot(px~x); abline(v = c(0.7,0.9)); abline(h = c(0.5,0.975))
 	#plot(dx~x); abline(v = c(0.7,0.9))
 	# upper percentile at 0.9
-	checkEquals(which.min(abs(px - 0.999)), which(x == 0.9) )
-	checkEquals(which.min(abs(px - 0.5)), which.min(abs(x - 0.7)) )
+	expect_equal(which.min(abs(px - 0.999)), which(x == 0.9) )
+	expect_equal(which.min(abs(px - 0.5)), which.min(abs(x - 0.7)) )
 	# mode at 0.7
-	#checkEquals(which(abs(x-0.7)<.Machine$double.eps), which.max(dx) )
-}
+	#expect_equal(which(abs(x-0.7)<.Machine$double.eps), which.max(dx) )
+})
 
-test.twCoefLogitnormN <- function(){
-	quant = c(0.7,0.8,0.9)
+test_that("twCoefLogitnormN", {
+  local_x_l()
+  quant = c(0.7,0.8,0.9)
 	perc = c(0.5,0.75,0.975)
 	(theta <- twCoefLogitnormN( quant = quant, perc = perc ))
+	# regression to previous results
+	expect_equal(theta, c(mu=0.86, sigma = 0.76), tolerance = 0.01)
 	#px <- plogitnorm(x,mu = theta[1],sigma = theta[2])	#percentiles function
 	#dx <- dlogitnorm(x,mu = theta[1],sigma = theta[2])	#density function
 	#plot(px~x); abline(v = quant,col = "gray"); abline(h = perc,col = "gray")
-}
+})
 
 
-test.twCoefLogitnormMLE <- function(){
-	theta <- twCoefLogitnormMLE(0.7,0.9,perc = 0.975)
+test_that("twCoefLogitnormMLE", {
+  local_x_l()
+  theta <- twCoefLogitnormMLE(0.7,0.9,perc = 0.975)
 	px <- plogitnorm(x,mu = theta[1],sigma = theta[2])	#percentiles function
 	dx <- dlogitnorm(x,mu = theta[1],sigma = theta[2])	#density function
 	#plot(px~x); abline(v = c(0.7,0.9)); abline(h = c(0.5,0.975))
 	#plot(dx~x); abline(v = c(0.7,0.9))
 	# upper percentile at 0.9
-	checkEquals(which.min(abs(px - 0.975)), which(x == 0.9) )
+	expect_equal(which.min(abs(px - 0.975)), which(x == 0.9) )
 	# mode at 0.7
-	checkEquals(which.min(abs(x - 0.7)), which.max(dx) )
-}
+	expect_equal(which.min(abs(x - 0.7)), which.max(dx) )
+})
 
 
-test.twCoefLogitnormE <- function(){
+test_that("twCoefLogitnormE", {
+  local_x_l()
   set.seed(0815)
   theta <- twCoefLogitnormE(0.7,0.9)
 	px <- plogitnorm(x,mu = theta[1],sigma = theta[2])	#percentiles function
@@ -88,16 +107,17 @@ test.twCoefLogitnormE <- function(){
 	#plot(px~x); abline(v = c(0.7,0.9)); abline(h = c(0.5,0.975))
 	#plot(dx~x); abline(v = c(0.7,0.9))
 	# upper percentile at 0.9
-	checkEquals(which.min(abs(px - 0.975)), which(x == 0.9) )
+	expect_equal(which.min(abs(px - 0.975)), which(x == 0.9) )
 	# mean at 0.7
-	checkEqualsNumeric( momentsLogitnorm(
-	  mu = theta[1],sigma = theta[2])["mean"], 0.7, tolerance = 1e-3)
+	expect_equal( unname(momentsLogitnorm(
+	  mu = theta[1],sigma = theta[2])["mean"]), 0.7, tolerance = 1e-3)
 	z <- rlogitnorm(1e5, mu = theta[1],sigma = theta[2])
-	checkEqualsNumeric(0.7, mean(z), tolerance = 5e-3 )
-}
+	expect_equal(unname(mean(z)), 0.7, tolerance = 5e-3 )
+})
 
 .tmp.f <- function(){
-	px <- plogitnorm(x)	#percentiles
+  local_x_l()
+  px <- plogitnorm(x)	#percentiles
 	plot( px ~ x )	
 	plot( qlogitnorm(px) ~ x ) 	#one to one line
 	plot( dlogitnorm(x,mu = 0.9) ~ x, type = "l" )
