@@ -1,3 +1,5 @@
+# logitnorm (development version)
+
 # version 0.8.39
 fix empty documentation of some arguments
 
