@@ -6,9 +6,8 @@
     ...)}
 \arguments{
   \item{x}{vector of quantiles}
-  \item{mu}{distribution parameters}
-  \item{sigma}{
-}
+  \item{mu}{scale distribution parameter}
+  \item{sigma}{location distribution parameter}
   \item{log}{if TRUE, the log-density is returned}
   \item{\dots}{further arguments passed to \code{\link{dnorm}}: \code{mean},
 and \code{sd} for mu and sigma respectively.  }

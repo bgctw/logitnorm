@@ -5,11 +5,9 @@
 \usage{qlogitnorm(p, mu = 0, sigma = 1, ...)}
 \arguments{
   \item{p}{vector of probabilities}
-  \item{mu}{distribution parameters}
-  \item{sigma}{
-}
-  \item{\dots}{
-}
+  \item{mu}{location distribution parameter}
+  \item{sigma}{scale distribution parameter}
+  \item{\dots}{further arguments to plogis}
 }
 
 

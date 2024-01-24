@@ -2,14 +2,11 @@
 \alias{twCoefLogitnorm}
 \title{twCoefLogitnorm}
 \description{Estimating coefficients of logitnormal distribution from median and upper quantile	}
-\usage{twCoefLogitnorm(median, quant, perc = 0.975, 
-    ...)}
+\usage{twCoefLogitnorm(median, quant, perc = 0.975)}
 \arguments{
   \item{median}{numeric vector: the median of the density function}
   \item{quant}{numeric vector: the upper quantile value}
   \item{perc}{numeric vector: the probability for which the quantile was specified}
-  \item{\dots}{
-}
 }
 
 \value{numeric matrix with columns \code{c("mu","sigma")}

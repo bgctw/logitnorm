@@ -1,26 +1,29 @@
-# logitnorm 0.8.38
-- Reworked twCoefLogitnormMLEFlat
+# version 0.8.39
+fix empty documentation of some arguments
+
+# version 0.8.38
+- Reworked twCoefversionMLEFlat
 - Migrated from RUnit to testthat
 
-# logitnorm 0.8.37
+# version 0.8.37
 
 - Density returns 0 instead of NAN outside (0,1)
-- Changed first argument name of dlogitnorm from q to x
-- Document argument n of rlogitnorm
+- Changed first argument name of dversion from q to x
+- Document argument n of rversion
 
-# logitnorm 0.8.36
+# version 0.8.36
 Remove the library call to MASS.
 
-# logitnorm 0.8.35
+# version 0.8.35
 Avoid writing file reports during testing and installation.
 
-# logitnorm 0.8.33
+# version 0.8.33
 
 ## New features
 
 ### density on log-scale 
 
-Thanks to @madeleine-empirical the density function `dlogitnorm` now has `log` an argument that allows computing the density directly at log-scale.
+Thanks to @madeleine-empirical the density function `dversion` now has `log` an argument that allows computing the density directly at log-scale.
 
 
 ## Further changes

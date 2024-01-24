@@ -4,10 +4,8 @@
 \description{Transforming (0,1) to normal scale (-Inf Inf)}
 \usage{logit(p, ...)}
 \arguments{
-  \item{p}{
-}
-  \item{\dots}{
-}
+  \item{p}{percentile}
+  \item{\dots}{further arguments to qlogis}
 }
 \details{function \eqn{logit(p) = log \left( \frac{p}{1-p} \right) = log(p) - log(1-p)}}
 

@@ -14,8 +14,7 @@ specified}
   \item{theta0}{starting parameters}
   \item{returnDetails}{if TRUE, the full output of optim is returned
 with attribute resOptim}
-  \item{\dots}{
-}
+  \item{\dots}{further arguments to optim}
 }
 
 \value{named numeric matrix with estimated parameters of the logitnormal 

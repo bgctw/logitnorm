@@ -5,7 +5,8 @@
 
 logit <- function(
   ### Transforming (0,1) to normal scale (-Inf Inf)
-  p,...
+  p      ##<< percentile
+  ,...   ##<< further arguments to qlogis
 ){ 
   ##details<<
   ## function \eqn{logit(p) = log \left( \frac{p}{1-p} \right) = log(p) - log(1-p)}
@@ -16,7 +17,8 @@ logit <- function(
 
 invlogit <- function(
   ### Transforming (-Inf,Inf) to original scale (0,1)
-  q,...
+  q,   ##<< quantile
+  ...  ##<< further arguments to plogis
 ){
   ##details<<
   ## function \eqn{f(z) = \frac{e^{z}}{e^{z} + 1} \! = \frac{1}{1 + e^{-z}} \!}
@@ -42,8 +44,9 @@ rlogitnorm <- function(
 plogitnorm <- function(
   ### Distribution function for logitnormal distribution	
   q  ##<< vector of quantiles
-  , mu = 0, sigma = 1	##<< distribution parameters
-  , ...
+  , mu = 0    ##<< location distribution parameter
+  , sigma = 1	##<< scale distribution parameter
+  , ...       ##<< further arguments to pnorm
 ){
   ##seealso<< \code{\link{logitnorm}}
   ql <- qlogis(q)
@@ -54,7 +57,8 @@ plogitnorm <- function(
 dlogitnorm <- function(
   ### Density function of logitnormal distribution	
   x		##<< vector of quantiles
-  , mu = 0, sigma = 1	##<< distribution parameters
+  , mu = 0         ##<< scale distribution parameter
+  , sigma = 1	     ##<< location distribution parameter
   , log = FALSE    ##<< if TRUE, the log-density is returned
   , ...	##<< further arguments passed to \code{\link{dnorm}}: \code{mean}, 
   ## and \code{sd} for mu and sigma respectively.  
@@ -89,8 +93,9 @@ dlogitnorm <- function(
 qlogitnorm <- function(
   ### Quantiles of logitnormal distribution.	
   p ##<< vector of probabilities
-  , mu = 0, sigma = 1	##<< distribution parameters
-  , ...
+  , mu = 0    ##<< location distribution parameter
+  , sigma = 1	##<< scale distribution parameter
+  , ...       ##<< further arguments to plogis
 ){
   ##seealso<< \code{\link{logitnorm}}
   qn <- qnorm(p,mean = mu,sd = sigma,...)
@@ -166,7 +171,6 @@ twCoefLogitnorm <- function(
   median					##<< numeric vector: the median of the density function
   , quant					##<< numeric vector: the upper quantile value
   , perc = 0.975				##<< numeric vector: the probability for which the quantile was specified
-  , ... 
 ){
   ##seealso<< \code{\link{logitnorm}}
   # twCoefLogitnorm
@@ -397,7 +401,7 @@ twCoefLogitnormE <- function(
   , theta0 = c(mu = 0,sigma = 1)	##<< starting parameters
   , returnDetails = FALSE	##<< if TRUE, the full output of optim is returned 
   ## with attribute resOptim
-  , ... 
+  , ...                   ##<< further arguments to optim
 ){
   ##seealso<< \code{\link{logitnorm}}
   # twCoefLogitnormE

@@ -1,11 +1,9 @@
 ## Note
-Added random seeds to tests to avoid accidental failing,
-and markdown dependency to Suggests.
+Fixed empty Rd comments for some arguments.
 
 ## Test environments
-* local R 4.0.3 on Mint 20 64bit
+* local R 4.3.2 on Mint 21.2 64bit
 * r-hub.io
-* winbuilder
 
 ## R CMD check results
 There were no ERRORs nor WARNINGs nor NOTEs

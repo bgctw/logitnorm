@@ -26,3 +26,7 @@ vignettes/*.pdf
 /.svn
 .Rproj.user
 *.Rproj
+# twutz 2401
+/tmp/
+/tests/testthat/Rplots.pdf
+

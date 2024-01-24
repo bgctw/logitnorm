@@ -4,10 +4,8 @@
 \description{Transforming (-Inf,Inf) to original scale (0,1)}
 \usage{invlogit(q, ...)}
 \arguments{
-  \item{q}{
-}
-  \item{\dots}{
-}
+  \item{q}{quantile}
+  \item{\dots}{further arguments to plogis}
 }
 \details{function \eqn{f(z) = \frac{e^{z}}{e^{z} + 1} \! = \frac{1}{1 + e^{-z}} \!}}
 
